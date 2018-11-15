@@ -182,6 +182,27 @@
             </div>
         </div>
         {% endif %}
+
+        {% if product.product_ratings.size > 1 %}
+            <h4>Product Ratings</h4>
+            {% for productRating in product.product_ratings limit:5 %}
+                <p>
+                    {{ productRating.author_nickname }}
+                    <span ng-repeat="n in [].constructor({{productRating.rating}}) track by $index">
+                        <span class="fa fa-star" style="color: orange;"></span>
+                    </span>
+
+                    <span ng-repeat="n in [].constructor(5 - {{productRating.rating}}) track by $index">
+                        <span class="fa fa-star"></span>
+                    </span>
+
+                    <br />
+                    <time pubdate datetime="{{ productRating.created_date | date: '%Y-%m-%d' }}"
+                        <em class="text-light">{{ productRating.created_date | date: format: 'month_day_year' }}</em>
+                    </time>
+                </p>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 
